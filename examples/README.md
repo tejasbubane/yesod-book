@@ -11,8 +11,10 @@ This repo contains `stack.yml` which uses system ghc. Install `yesod` in global 
 stack install yesod yesod-bin
 ```
 
-Then run examples using `runghc`:
+Then run each example separately using `runghc` like:
 
 ```sh
-stack runghc helloworld.hs
+stack runghc 01-helloworld.hs
 ```
+
+This will start a server on port [http://localhost:3000](http://localhost:3000).
