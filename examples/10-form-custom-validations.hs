@@ -27,16 +27,25 @@ data Car = Car
   {
     carModel :: Text
   , carYear :: Int
-  , carColor :: Maybe Text
+  , carColor :: Maybe Color
   }
   deriving (Eq, Show)
+
+data Color = Red | Blue | Gray | Black
+  deriving (Show, Eq, Enum, Bounded)
 
 carAForm :: AForm Handler Car
 carAForm = Car
   <$> areq textField "Model" Nothing
   <*> areq carYearField "Year" Nothing -- instead of intField use custom for validations
-  <*> aopt textField "Color" Nothing
+  -- <*> aopt (selectFieldList colors) "Color" Nothing
+  <*> aopt (selectField optionsEnum) "Color" Nothing
+  -- or radio buttons
+  -- <*> aopt (radioField optionsEnum) "Color" Nothing
   where
+    -- colors :: [(Text, Color)]
+    -- colors = [("Red", Red), ("Blue", Blue), ("Gray", Gray), ("Black", Black)]
+    -- Instead of giving explicit options^ use optionsEnum provided by yesod-form
     errorMessage :: Text
     errorMessage = "Your car is too old, get a new one!"
     -- checkM for monadic check
